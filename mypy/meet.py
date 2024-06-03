@@ -547,6 +547,9 @@ def is_overlapping_types(
     # Note: it's unclear however, whether returning False is the right thing
     # to do when inferring reachability -- see  https://github.com/python/mypy/issues/5529
 
+    if isinstance(left, UnpackType) and isinstance(right, UnpackType):
+        return _is_overlapping_types(left.type, right.type)
+
     assert type(left) != type(right), f"{type(left)} vs {type(right)}"
     return False
 
